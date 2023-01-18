@@ -3,13 +3,12 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 import string
-from tqdm import tqdm #مكتبة بالعربي اسمها تقدم دي بتخليك قادر انك تتتبع حاجة معينة عن طريق حاجة اسمها بروجريس بار 
+from tqdm import tqdm #to monitor some processes using progess bar 
 import re
 
 # nltk
-from nltk.tokenize import word_tokenize #بيقسم الكلمات علي حسب الترقيم او المسطرة 
-from nltk.corpus import stopwords # الكلمات اللي انت مش حابب تستخدمها كوصف للمنتج بتاعك الكلمات المنتشرة او المستخدمة بكثرة اللي محرك البحث بيتجاهلها و اللي احنا مش عاوزينها تاخد مساحة
-
+from nltk.tokenize import word_tokenize 
+from nltk.corpus import stopwords 
 
 # sklearn
 from sklearn.model_selection import train_test_split
@@ -25,14 +24,14 @@ from keras.optimizers import Adam
 
 import tensorflow as tf
 
-stop = set(stopwords.words('english')) #الكلمات المستخدمة بكثرة اللي انا مش عاوزها
+stop = set(stopwords.words('english')) 
 Using TensorFlow backend.
 
 df_train = pd.read_csv('../input/nlp-getting-started/train.csv')
 df_test = pd.read_csv('../input/nlp-getting-started/test.csv')
 
-df_train.head()  #هيطبع اسماء العواميد او القيم في القواميس (بيطبع اول صف من الحاجة) و برضو علشان اعرف كل عمود فيه الداتا الصح ولا لا
-df_train.tail() #علشان تطبع اخر صف و تتأكد من الناتج في الاخر 
+df_train.head() 
+df_train.tail() 
 
 # shape
 print(f"There are {df_train.shape[0]} rows and {df_train.shape[1]} columns. ")
@@ -49,7 +48,7 @@ sns.barplot(null_vals.index,null_vals)
 
 # Removing <> tags
 
-def remove_spec(text): #الاسبيشال كاركتر
+def remove_spec(text):
     text = re.sub('<.*?>+', '', text)
     text = text.lower()
     return text
@@ -67,7 +66,6 @@ def remove_urls(text):
     return text
 
 # Removing Emojis
-#كان الافضل تحويل الايموجيز دي لانها ممكن يكون ليها دلالات تانية سواء حلوة او وحشة
 
 def remove_emoji(text):
     emojis = re.compile("["
@@ -82,7 +80,6 @@ def remove_emoji(text):
     text = re.sub(emojis,'',text)
     return text
 
-#بعد عملية المسح
 
     df_train['cleaned_text'] = df_train['text'].apply(lambda x : remove_punctuation(x))
 df_train['cleaned_text'] = df_train['cleaned_text'].apply(lambda x : remove_urls(x))
